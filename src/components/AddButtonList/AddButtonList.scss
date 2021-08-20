@@ -1,0 +1,54 @@
+.add-list-popup {
+	height: 150px;
+	width: 240px;
+	box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.05);
+	border-radius: 10px;
+	background-color: #fff;
+	position: relative;
+	left: 10px;
+
+	&__close-btn {
+		position: absolute;
+		top: -7px;
+		right: -27px;
+		cursor: pointer;
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		width: 200px;
+		position: relative;
+		left: 50%;
+		transform: translate(-50%);
+		padding-top: 18px;
+	}
+
+	&__input {
+		height: 30px;
+		width: 100%;
+		align-self: center;
+		margin-bottom: 13px;
+	}
+
+	&__button {
+		height: 35px;
+		width: 100%;
+	}
+
+	&__colors {
+		margin-bottom: 13px;
+		display: flex;
+		justify-content: space-between;
+		.icon {
+			width: 20px;
+			height: 20px;
+			cursor: pointer;
+			border: 2px solid transparent;
+
+			&.active {
+				border: 2px solid #525252;
+			}
+		}
+	}
+}

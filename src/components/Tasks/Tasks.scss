@@ -1,0 +1,95 @@
+.tasks {
+	&__title {
+		margin-bottom: 30px;
+	}
+
+	&__body {
+		&:not(:last-of-type) {
+			margin-bottom: 40px;
+		}
+	}
+
+	&__items {
+		margin-bottom: 20px;
+	}
+
+	&__no-item {
+		position: absolute;
+		top:60%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		min-width: 350px;
+
+		span {
+			font-family: "Montserrat";
+			font-weight: bold;
+			font-size: 32px;
+			line-height: 39px;
+			color: #C9D1D3;
+		}
+	}
+}
+
+.title {
+	border-bottom: 1px solid #F2F2F2;
+	display: flex;
+	padding-bottom: 20px;
+	align-items: center;
+
+	&:hover {
+		img {
+			visibility: visible;
+			opacity: 0.2;
+		}
+	}
+
+		&__text {
+		font-family: 'Montserrat', sans-serif;
+		font-size: 32px;
+		line-height: 39px;
+
+		img {
+			margin-left: 15px;
+			visibility: hidden;
+			cursor: pointer;
+
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+	}
+}
+
+.text {
+	&_green {
+		color: #42B883;
+	}
+
+	&_blue {
+		color: #64C4ED;
+	}
+
+	&_pink {
+		color: #FFBBCC;
+	}
+
+	&_lime {
+		color: #B6E6BD;
+	}
+
+	&_grey {
+		color: #C9D1D3;
+	}
+
+	&_purple {
+		color: #C355F5;
+	}
+
+	&_black {
+		color: #110133;
+	}
+
+	&_red {
+		color: #FF6464;
+	}
+}

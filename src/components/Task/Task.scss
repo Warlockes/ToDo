@@ -1,0 +1,117 @@
+.item {
+	display: flex;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 7px;
+	margin-left: -7px;
+	border-radius: 8px;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	&__actions {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		div {
+			svg {
+				opacity: 0;
+			}
+		}
+
+		&_edit {
+			padding: 3px;
+			margin-right: 5px;
+			cursor: pointer;
+		}
+
+		&_delete {
+			padding: 3px;
+			cursor: pointer;
+		}	
+	}
+
+	&:hover {
+		background: rgba(244, 246, 248, 0.3);
+		transition: background-color 0.15s ease-in-out;
+		
+		.item__actions {
+			svg {
+				transition: opacity 0.15s ease-in-out;
+				opacity: 0.2;
+			}
+
+			&_edit:hover {
+				svg {
+					opacity: 0.8;
+				}
+			}
+
+			&_delete:hover {
+				svg {
+					opacity: 0.8;
+				}
+			}
+		}
+	}
+
+	&__text {
+		font-family: 'Lato', sans-serif;
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 19px;
+		border: none;
+		width: 100%;
+		background: transparent;
+	}
+
+	&__checkbox {
+		margin-right: 13px;
+		input {
+			display: none;
+		}
+
+		label {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border: 2px solid #E8E8E8;
+			width: 20px;
+			height: 20px;
+			border-radius: 30px;
+			cursor: pointer;
+			transition: background-color 0.25s ease-in-out;
+
+			svg {
+				visibility: hidden;
+			}
+
+			&:hover {
+				background-color: #F2F2F2;
+				border-color: #F2F2F2;
+				svg {
+					visibility: visible;					
+					path {
+						stroke: #B2B2B2;
+					}
+				}
+			}
+		}
+
+		input:checked + label {
+			svg {
+				visibility: visible;				
+				path {
+					stroke: #fff
+				}
+			}
+			background-color: #4DD599;
+			border-color: #4DD599;
+		}
+	}
+}
+
+.done {
+	text-decoration: line-through;
+}

@@ -1,0 +1,37 @@
+.icon {
+	width: 10px;
+	height: 10px;
+	border-radius: 30px;
+
+	&_green {
+		background-color: #42B883;
+	}
+
+	&_blue {
+		background-color: #64C4ED;
+	}
+
+	&_pink {
+		background-color: #FFBBCC;
+	}
+
+	&_lime {
+		background-color: #B6E6BD;
+	}
+
+	&_grey {
+		background-color: #C9D1D3;
+	}
+
+	&_purple {
+		background-color: #C355F5;
+	}
+
+	&_black {
+		background-color: #110133;
+	}
+
+	&_red {
+		background-color: #FF6464;
+	}
+}

@@ -1,0 +1,68 @@
+.form {
+	&-new {
+		display: inline-flex;
+		align-items: center;
+		transition: color 0.15s ease-in-out;
+
+		&:hover {
+			cursor: pointer;
+				svg {
+					path {
+						stroke: darken(#B4B4B4, 70%);
+					}
+				}
+
+			span {
+				color: darken(#B4B4B4, 70%);
+			}
+		}
+
+		svg {
+			margin-left: 2px;
+			margin-right: 16px;
+		}
+		span {
+			font-family: 'Lato', sans-serif;
+			font-weight: 500;
+			font-size: 16px;
+			letter-spacing: 0.15px;
+			color: #B4B4B4;
+		}
+	}
+
+	&__input {
+		height: 40px;
+		font-size: 14px;
+		line-height: 20px;
+		width: 100%;
+		margin-bottom: 16px;
+	}
+}
+
+.btn-row {
+	&__button-add {
+		margin-right: 10px;
+	}
+
+	&__button-cancel {
+			background: #F4F6F8;
+			border-radius: 4px;
+			border-style: none;
+			color: #9C9C9C;
+			font-style: normal;
+			font-size: 14px;
+			line-height: 17px;
+			text-align: center;
+			letter-spacing: 0.15px;
+			padding: 10px 20px;
+	
+			&:hover {
+				background-color: darken(#F4F6F8, 5%);
+				cursor: pointer;
+			}
+	
+			&:active {
+				background-color: darken(#F4F6F8, 10%);
+			}
+	}
+}
