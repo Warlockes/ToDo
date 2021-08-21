@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import List from "../List";
-import Icon from "../Icon";
+import { List, Icon } from "../";
 
 import closeBtn from "../../assets/img/closeBtn.svg";
 
 import "./AddButtonList.scss";
 
-const AddButtonList = ({ colors, sidebarList, onAddList }) => {
+const AddButtonList = ({ colors, sidebarListLength, onAddList }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [selectedColor, selectColor] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +31,7 @@ const AddButtonList = ({ colors, sidebarList, onAddList }) => {
     setIsLoading(true);
     axios
       .post("http://localhost:3001/lists", {
-        id: sidebarList.length + 1,
+        id: sidebarListLength + 1,
         name: inputValue,
         colorId: selectedColor,
       })
@@ -47,6 +46,12 @@ const AddButtonList = ({ colors, sidebarList, onAddList }) => {
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  const onPressEnter = (e) => {
+    if (e.key === "Enter") {
+      addList();
+    }
   };
 
   return (
@@ -95,6 +100,7 @@ const AddButtonList = ({ colors, sidebarList, onAddList }) => {
             />
             <input
               value={inputValue}
+              onKeyPress={onPressEnter}
               onChange={(e) => setInputValue(e.target.value)}
               className="add-list-popup__input input"
               type="text"

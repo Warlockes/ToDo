@@ -1,4 +1,6 @@
 import React from "react";
+
+import axios from "axios";
 import classNames from "classnames";
 
 import "./Task.scss";
@@ -7,9 +9,41 @@ export default function Task({
   task,
   onChangeTaskStatus,
   list,
-  onRemove,
-  onEdit,
+  onRemoveTask,
+  onEditTask,
 }) {
+  const onChangeStatus = () => {
+    axios
+      .patch("http://localhost:3001/tasks/" + task.id, {
+        completed: !task.completed,
+      })
+      .catch(() => alert("Не удалось обновить статус задачи"));
+    onChangeTaskStatus(task.id, list.id);
+  };
+
+  const onRemove = () => {
+    if (window.confirm("Вы действительно хотите удалить задачу?")) {
+      axios
+        .delete("http://localhost:3001/tasks/" + task.id)
+        .catch(() => alert("Не удалось удалить задачу"));
+      onRemoveTask(task.id, list.id);
+    }
+  };
+
+  const onEdit = () => {
+    const newValue = window.prompt("Текст задачи", task.text);
+    if (newValue) {
+      onEditTask(task.id, newValue, list.id);
+      axios
+        .patch("http://localhost:3001/tasks/" + task.id, {
+          text: newValue,
+        })
+        .catch(() => alert("Не удалось обновить задачу"));
+    } else if (newValue === "") {
+      alert("Текст задачи не может быть пустым");
+    }
+  };
+
   return (
     <div className="item">
       <div className="item__checkbox">
@@ -17,7 +51,7 @@ export default function Task({
           id={task.id}
           type="checkbox"
           checked={task.completed}
-          onChange={() => onChangeTaskStatus(task, list.id)}
+          onChange={onChangeStatus}
         />
         <label htmlFor={task.id}>
           <svg
@@ -41,10 +75,7 @@ export default function Task({
         {task.text}
       </p>
       <div className="item__actions">
-        <div
-          className="item__actions_edit"
-          onClick={() => onEdit(task, list.id)}
-        >
+        <div className="item__actions_edit" onClick={onEdit}>
           <svg
             width="12"
             height="12"
@@ -58,10 +89,7 @@ export default function Task({
             />
           </svg>
         </div>
-        <div
-          className="item__actions_delete"
-          onClick={() => onRemove(task.id, list.id)}
-        >
+        <div className="item__actions_delete" onClick={onRemove}>
           <svg
             width="10"
             height="10"

@@ -4,7 +4,7 @@ import { Route, useHistory, useLocation } from "react-router-dom";
 
 import { List, AddButtonList, Tasks } from "./components";
 
-function App() {
+export default function App() {
   const [sidebarList, setSidebarList] = useState(null);
   const [colors, setColors] = useState(null);
   const [selectedListId, setSelectedListId] = useState(null);
@@ -36,10 +36,6 @@ function App() {
     setSidebarList(newList);
   };
 
-  const deleteList = (list) => {
-    setSidebarList(sidebarList.filter((item) => item !== list));
-  };
-
   const onEditListTitle = (id, title) => {
     const newList = sidebarList.map((item) => {
       if (item.id === id) {
@@ -50,16 +46,11 @@ function App() {
     setSidebarList(newList);
   };
 
-  const onChangeTaskStatus = (task, listId) => {
-    axios
-      .patch("http://localhost:3001/tasks/" + task.id, {
-        completed: !task.completed,
-      })
-      .catch(() => alert("Не удалось обновить статус задачи"));
+  const onChangeTaskStatus = (taskId, listId) => {
     const newList = sidebarList.map((list) => {
       if (list.id === listId) {
         list.tasks = list.tasks.map((item) => {
-          if (item.id === task.id) {
+          if (item.id === taskId) {
             item.completed = !item.completed;
           }
           return item;
@@ -71,26 +62,21 @@ function App() {
   };
 
   const onRemoveTask = (taskId, listId) => {
-    if (window.confirm("Вы действительно хотите удалить задачу?")) {
-      axios
-        .delete("http://localhost:3001/tasks/" + taskId)
-        .catch(() => alert("Не удалось удалить задачу"));
-      const newList = sidebarList.map((list) => {
-        if (list.id === listId) {
-          list.tasks = list.tasks.filter((task) => task.id !== taskId);
-        }
-        return list;
-      });
-      setSidebarList(newList);
-    }
+    const newList = sidebarList.map((list) => {
+      if (list.id === listId) {
+        list.tasks = list.tasks.filter((task) => task.id !== taskId);
+      }
+      return list;
+    });
+    setSidebarList(newList);
   };
 
-  const onEditTaskValue = (taskId, newValue, listId) => {
+  const onEditTaskText = (taskId, newText, listId) => {
     const newList = sidebarList.map((list) => {
       if (list.id === listId) {
         list.tasks = list.tasks.map((item) => {
           if (item.id === taskId) {
-            item.text = newValue;
+            item.text = newText;
           }
           return item;
         });
@@ -131,21 +117,26 @@ function App() {
         {sidebarList ? (
           <List
             items={sidebarList}
-            isRemovable
-            onRemove={deleteList}
+            onRemove={(list) =>
+              setSidebarList(sidebarList.filter((item) => item !== list))
+            }
             onClickItem={(id) => {
               history.push(`/lists/${id}`);
             }}
             selectedItemId={selectedListId}
+            isRemovable
           />
         ) : (
           "Загрузка..."
+          // Добавить loader с анимацией
         )}
-        <AddButtonList
-          onAddList={(obj) => setSidebarList([...sidebarList, obj])}
-          sidebarList={sidebarList}
-          colors={colors}
-        />
+        {sidebarList ? (
+          <AddButtonList
+            onAddList={(obj) => setSidebarList([...sidebarList, obj])}
+            sidebarListLength={sidebarList.length}
+            colors={colors}
+          />
+        ) : null}
       </div>
       <div className="todo__tasks tasks">
         <Route exact path="/">
@@ -158,7 +149,7 @@ function App() {
                 onAddTask={onAddTask}
                 onChangeTaskStatus={onChangeTaskStatus}
                 onRemoveTask={onRemoveTask}
-                onEditTask={onEditTaskValue}
+                onEditTask={onEditTaskText}
                 withoutEmpty
               />
             ))}
@@ -170,12 +161,10 @@ function App() {
             onAddTask={onAddTask}
             onChangeTaskStatus={onChangeTaskStatus}
             onRemoveTask={onRemoveTask}
-            onEditTask={onEditTaskValue}
+            onEditTask={onEditTaskText}
           />
         )}
       </div>
     </div>
   );
 }
-
-export default App;

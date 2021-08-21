@@ -1,9 +1,10 @@
 import React from "react";
+
 import axios from "axios";
 import classNames from "classnames";
 
-import AddTaskForm from "../AddTaskForm";
-import Task from "../Task";
+import { AddTaskForm, Task } from "../";
+
 import editIcon from "../../assets/img/edit.svg";
 
 import "./Tasks.scss";
@@ -31,20 +32,6 @@ const Tasks = ({
     }
   };
 
-  const editTask = (task, listId) => {
-    const newValue = window.prompt("Текст задачи", task.text);
-    if (newValue) {
-      onEditTask(task.id, newValue, listId);
-      axios
-        .patch("http://localhost:3001/tasks/" + task.id, {
-          text: newValue,
-        })
-        .catch(() => alert("Не удалось обновить задачу"));
-    } else if (newValue === "") {
-      alert("Текст задачи не может быть пустым");
-    }
-  };
-
   return (
     <div className="tasks__body">
       <div className="tasks__title title">
@@ -65,13 +52,13 @@ const Tasks = ({
               task={task}
               onChangeTaskStatus={onChangeTaskStatus}
               list={list}
-              onRemove={onRemoveTask}
-              onEdit={editTask}
+              onRemoveTask={onRemoveTask}
+              onEditTask={onEditTask}
             />
           ))}
         </div>
       )}
-      <AddTaskForm list={list} onAddTask={onAddTask} />
+      <AddTaskForm listId={list.id} onAddTask={onAddTask} />
     </div>
   );
 };

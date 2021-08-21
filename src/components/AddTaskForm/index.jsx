@@ -3,7 +3,7 @@ import axios from "axios";
 
 import "./AddTaskForm.scss";
 
-const AddTaskForm = ({ list, onAddTask }) => {
+const AddTaskForm = ({ listId, onAddTask }) => {
   const [visibleForm, setVisibleForm] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +19,7 @@ const AddTaskForm = ({ list, onAddTask }) => {
       return;
     }
     const obj = {
-      listId: list.id,
+      listId,
       text: inputValue,
       completed: false,
     };
@@ -27,8 +27,7 @@ const AddTaskForm = ({ list, onAddTask }) => {
     axios
       .post("http://localhost:3001/tasks", obj)
       .then(({ data }) => {
-        console.log(data);
-        onAddTask(list.id, data);
+        onAddTask(listId, data);
       })
       .catch(() => alert("Ошибка при добавлении задачи"))
       .finally(() => {
@@ -37,10 +36,18 @@ const AddTaskForm = ({ list, onAddTask }) => {
       });
   };
 
+  const handlePressEnter = (e) => {
+    console.log(e.key);
+    if (e.key === "Enter") {
+      addTask();
+    }
+  };
+
   return visibleForm ? (
     <div className="tasks__form form">
       <input
         value={inputValue}
+        onKeyPress={handlePressEnter}
         onChange={(e) => setInputValue(e.target.value)}
         className="form__input input"
         type="text"
