@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 
 import { List, Icon } from "../";
+import { Context } from "../../context";
 
 import closeBtn from "../../assets/img/closeBtn.svg";
 
 import "./AddButtonList.scss";
 
-const AddButtonList = ({ colors, sidebarListLength, onAddList }) => {
+const AddButtonList = ({ colors, sidebarListLength }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [selectedColor, selectColor] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
+
+  const { onAddList } = useContext(Context);
 
   useEffect(() => {
     if (Array.isArray(colors)) selectColor(colors[0].id);
@@ -23,7 +26,7 @@ const AddButtonList = ({ colors, sidebarListLength, onAddList }) => {
     selectColor(colors[0].id);
   };
 
-  const addList = () => {
+  const onAdd = () => {
     if (!inputValue) {
       alert("Введите название списка");
       return;
@@ -38,8 +41,8 @@ const AddButtonList = ({ colors, sidebarListLength, onAddList }) => {
       .then(({ data }) => {
         const color = colors.filter((color) => color.id === selectedColor)[0]
           .name;
-        const newObj = { ...data, color: { name: color }, tasks: [] };
-        onAddList(newObj);
+        const newList = { ...data, color: { name: color }, tasks: [] };
+        onAddList(newList);
         onClosePopup();
       })
       .catch(() => alert("Ошибка при добавлении списка"))
@@ -50,7 +53,7 @@ const AddButtonList = ({ colors, sidebarListLength, onAddList }) => {
 
   const onPressEnter = (e) => {
     if (e.key === "Enter") {
-      addList();
+      onAdd();
     }
   };
 
@@ -118,7 +121,7 @@ const AddButtonList = ({ colors, sidebarListLength, onAddList }) => {
             </ul>
             <button
               disabled={isLoading}
-              onClick={addList}
+              onClick={onAdd}
               className="add-list-popup__button button"
             >
               {isLoading ? "Добавление..." : "Добавить"}

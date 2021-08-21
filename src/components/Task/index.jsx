@@ -1,24 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import axios from "axios";
 import classNames from "classnames";
 
+import { Context } from "../../context";
+
 import "./Task.scss";
 
-export default function Task({
-  task,
-  onChangeTaskStatus,
-  list,
-  onRemoveTask,
-  onEditTask,
-}) {
+export default function Task({ task, listId }) {
+  const { onChangeTaskStatus, onRemoveTask, onEditTaskText } =
+    useContext(Context);
+
   const onChangeStatus = () => {
     axios
       .patch("http://localhost:3001/tasks/" + task.id, {
         completed: !task.completed,
       })
       .catch(() => alert("Не удалось обновить статус задачи"));
-    onChangeTaskStatus(task.id, list.id);
+    onChangeTaskStatus(task.id, listId);
   };
 
   const onRemove = () => {
@@ -26,14 +25,14 @@ export default function Task({
       axios
         .delete("http://localhost:3001/tasks/" + task.id)
         .catch(() => alert("Не удалось удалить задачу"));
-      onRemoveTask(task.id, list.id);
+      onRemoveTask(task.id, listId);
     }
   };
 
   const onEdit = () => {
     const newValue = window.prompt("Текст задачи", task.text);
     if (newValue) {
-      onEditTask(task.id, newValue, list.id);
+      onEditTaskText(task.id, newValue, listId);
       axios
         .patch("http://localhost:3001/tasks/" + task.id, {
           text: newValue,

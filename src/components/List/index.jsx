@@ -1,24 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
+
 import classNames from "classnames";
 import axios from "axios";
 
 import Icon from "../Icon";
+import { Context } from "../../context";
+
 import removeIcon from "../../assets/img/remove.svg";
 
 import "./List.scss";
 
-const List = ({
-  items,
-  isRemovable,
-  onRemove,
-  onClickItem,
-  selectedItemId,
-  onClick,
-}) => {
-  const removeList = (item) => {
+const List = ({ items, isRemovable, onClickItem, selectedItemId, onClick }) => {
+  const { onRemoveList } = useContext(Context);
+
+  const removeList = ({ id }) => {
     if (window.confirm("Хотите удалить список?")) {
-      axios.delete("http://localhost:3001/lists/" + item.id).then(() => {
-        onRemove(item);
+      axios.delete("http://localhost:3001/lists/" + id).then(() => {
+        onRemoveList(id);
       });
     }
   };

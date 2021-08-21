@@ -1,23 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import axios from "axios";
 import classNames from "classnames";
 
+import { Context } from "../../context";
 import { AddTaskForm, Task } from "../";
 
 import editIcon from "../../assets/img/edit.svg";
 
 import "./Tasks.scss";
 
-const Tasks = ({
-  list,
-  onEditTitle,
-  onAddTask,
-  onChangeTaskStatus,
-  withoutEmpty,
-  onRemoveTask,
-  onEditTask,
-}) => {
+const Tasks = ({ list, withoutEmpty }) => {
+  const { onEditTitle } = useContext(Context);
+
   const editTitle = () => {
     const newTitle = window.prompt("Название списка", list.name);
     if (newTitle) {
@@ -47,18 +42,11 @@ const Tasks = ({
       ) : (
         <div className="tasks__items">
           {list.tasks.map((task) => (
-            <Task
-              key={task.id}
-              task={task}
-              onChangeTaskStatus={onChangeTaskStatus}
-              list={list}
-              onRemoveTask={onRemoveTask}
-              onEditTask={onEditTask}
-            />
+            <Task key={task.id} task={task} listId={list.id} />
           ))}
         </div>
       )}
-      <AddTaskForm listId={list.id} onAddTask={onAddTask} />
+      <AddTaskForm listId={list.id} />
     </div>
   );
 };

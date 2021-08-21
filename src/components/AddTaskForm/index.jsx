@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+
 import axios from "axios";
+
+import { Context } from "../../context";
 
 import "./AddTaskForm.scss";
 
-const AddTaskForm = ({ listId, onAddTask }) => {
+const AddTaskForm = ({ listId }) => {
   const [visibleForm, setVisibleForm] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const { onAddTask } = useContext(Context);
+
+  useEffect(() => {
+    setVisibleForm(false);
+    setInputValue("");
+  }, [listId]);
 
   const toggleFormVisible = () => {
     setVisibleForm(!visibleForm);
