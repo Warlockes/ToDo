@@ -11,12 +11,12 @@ import editIcon from "../../assets/img/edit.svg";
 import "./Tasks.scss";
 
 const Tasks = ({ list, withoutEmpty }) => {
-  const { onEditTitle } = useContext(Context);
+  const { onEditListTitle } = useContext(Context);
 
   const editTitle = () => {
     const newTitle = window.prompt("Название списка", list.name);
     if (newTitle) {
-      onEditTitle(list.id, newTitle);
+      onEditListTitle(list.id, newTitle);
       axios
         .patch("http://localhost:3001/lists/" + list.id, {
           name: newTitle,
