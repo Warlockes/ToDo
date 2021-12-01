@@ -35,7 +35,7 @@ const AddTaskForm = ({ listId }) => {
     };
     setIsLoading(true);
     axios
-      .post("http://localhost:3001/tasks", obj)
+      .post("https://json-server-todo-alex.herokuapp.com/tasks", obj)
       .then(({ data }) => {
         onAddTask(listId, data);
       })

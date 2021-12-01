@@ -15,9 +15,11 @@ const List = ({ items, isRemovable, onClickItem, selectedItemId, onClick }) => {
 
   const removeList = ({ id }) => {
     if (window.confirm("Хотите удалить список?")) {
-      axios.delete("http://localhost:3001/lists/" + id).then(() => {
-        onRemoveList(id);
-      });
+      axios
+        .delete("https://json-server-todo-alex.herokuapp.com/lists/" + id)
+        .then(() => {
+          onRemoveList(id);
+        });
     }
   };
 

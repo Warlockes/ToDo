@@ -18,7 +18,7 @@ const Tasks = ({ list, withoutEmpty }) => {
     if (newTitle) {
       onEditListTitle(list.id, newTitle);
       axios
-        .patch("http://localhost:3001/lists/" + list.id, {
+        .patch("https://json-server-todo-alex.herokuapp.com/lists/" + list.id, {
           name: newTitle,
         })
         .catch(() => alert("Не удалось обновить название списка"));

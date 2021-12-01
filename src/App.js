@@ -15,13 +15,17 @@ export default function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/lists?_expand=color&_embed=tasks")
+      .get(
+        "https://json-server-todo-alex.herokuapp.com/lists?_expand=color&_embed=tasks"
+      )
       .then(({ data }) => {
         setSidebarList(data);
       });
-    axios.get("http://localhost:3001/colors").then(({ data }) => {
-      setColors(data);
-    });
+    axios
+      .get("https://json-server-todo-alex.herokuapp.com/colors")
+      .then(({ data }) => {
+        setColors(data);
+      });
   }, []);
 
   useEffect(() => {

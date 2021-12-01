@@ -13,7 +13,7 @@ export default function Task({ task, listId }) {
 
   const onChangeStatus = () => {
     axios
-      .patch("http://localhost:3001/tasks/" + task.id, {
+      .patch("https://json-server-todo-alex.herokuapp.com/tasks/" + task.id, {
         completed: !task.completed,
       })
       .catch(() => alert("Не удалось обновить статус задачи"));
@@ -23,7 +23,7 @@ export default function Task({ task, listId }) {
   const onRemove = () => {
     if (window.confirm("Вы действительно хотите удалить задачу?")) {
       axios
-        .delete("http://localhost:3001/tasks/" + task.id)
+        .delete("https://json-server-todo-alex.herokuapp.com/tasks/" + task.id)
         .catch(() => alert("Не удалось удалить задачу"));
       onRemoveTask(task.id, listId);
     }
@@ -34,7 +34,7 @@ export default function Task({ task, listId }) {
     if (newValue) {
       onEditTaskText(task.id, newValue, listId);
       axios
-        .patch("http://localhost:3001/tasks/" + task.id, {
+        .patch("https://json-server-todo-alex.herokuapp.com/tasks/" + task.id, {
           text: newValue,
         })
         .catch(() => alert("Не удалось обновить задачу"));

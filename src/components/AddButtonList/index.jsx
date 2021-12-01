@@ -33,7 +33,7 @@ const AddButtonList = ({ colors, sidebarListLength }) => {
     }
     setIsLoading(true);
     axios
-      .post("http://localhost:3001/lists", {
+      .post("https://json-server-todo-alex.herokuapp.com/lists", {
         id: sidebarListLength + 1,
         name: inputValue,
         colorId: selectedColor,
